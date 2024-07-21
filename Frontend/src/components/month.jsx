@@ -12,7 +12,11 @@ function Month({ sample }) {
     let income = 0;
     const expenseCategories = new Map();
     const incomeCategories = new Map();
-    const [filtervalues, setFilterValues] = useState({})
+    const [filtervalues, setFilterValues] = useState({
+        category: '',
+        currency: '',
+        type: ''
+    })
 
     useEffect(() => {
         setFilteredMonth(sample);
