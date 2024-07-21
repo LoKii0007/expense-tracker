@@ -7,6 +7,7 @@ import { Transaction } from './Transaction';
 function Month({ sample }) {
     const lightTheme = useSelector((state) => state.themeKey);
     const [filteredMonth, setFilteredMonth] = useState(sample)
+    const [data, setData] = useState('')
     console.log(filteredMonth)
     let expense = 0;
     let income = 0;
@@ -25,6 +26,15 @@ function Month({ sample }) {
     useEffect(()=>{
        console.log('changed')
     }, [filteredMonth, applyFilter])
+
+    const filterBySearch=(transactions)=>{
+        console.log(transactions)
+        return transactions.map(month => 
+            month.filter(transaction => 
+                transaction.note.toLowerCase().includes(data.toLowerCase())
+            )
+        ).filter(month => month.length > 0);
+    }
 
     const filterByType = (transactions) => {
         console.log(transactions)
@@ -53,9 +63,9 @@ function Month({ sample }) {
         ).filter(month => month.length > 0);
     };
     function applyFilter(){
-        let filtered = filterByType(sample);
+        let filtered = filterBySearch(sample)
+        filtered = filterByType(filtered);
         filtered = filterByCategory(filtered);
-        console.log(filtered)
         filtered = filterByCurrency(filtered);
         setFilteredMonth(filtered);
     }
@@ -66,6 +76,7 @@ function Month({ sample }) {
             currency: '',
             type: ''
         })
+        setData('')
     }
 
     for (let i = 0; i < sample.length; i++) {
@@ -130,7 +141,7 @@ function Month({ sample }) {
             </div>
 
             <div className={`flex flex-col justify-center mb-8 items-center w-full ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} `}>
-                <SearchBar resetFilter={resetFilter} filtervalues={filtervalues} setFilterValues={setFilterValues} applyFilter={applyFilter} />
+                <SearchBar data={data} setData={setData} resetFilter={resetFilter} filtervalues={filtervalues} setFilterValues={setFilterValues} applyFilter={applyFilter} />
             </div>
 
             <div className={`flex flex-col justify-center items-center w-full h-full${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-700 text-white'} `}>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSelector } from 'react-redux';
 
 
-export function SearchBar({ filtervalues, setFilterValues, applyFilter, resetFilter }) {
+export function SearchBar({ filtervalues, setFilterValues, applyFilter, resetFilter, setData , data}) {
     const lightTheme = useSelector((state) => state.themeKey);
 
     function handleFilter(e) {
@@ -13,17 +13,23 @@ export function SearchBar({ filtervalues, setFilterValues, applyFilter, resetFil
         }))
         console.log(filtervalues);
     }
+
+    useEffect(()=>{
+      applyFilter()
+    }, [data])
+
     return (
         <div className={`flex search justify-evenly items-center w-10/12 lg:w-8/12  rounded mt-4 ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray800 text-white'} `}>
 
             <div className='s-left flex w-[100%] justify-center'>
                 <div className={`flex items-center w-8/12 rounded border ${lightTheme ? 'bg-white text-black' : 'bg-gray-700 text-white'} p-2`}>
                     <input
+                        onChange={(e)=>{setData(e.target.value)}}
                         type="text"
                         placeholder="Search by Title"
                         className={`flex-grow border-none outline-none bg-transparent ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-700 text-white'} `}
                     />
-                    <SearchIcon />
+                    <button onClick={applyFilter} ><SearchIcon /></button>
                 </div>
                 <button onClick={applyFilter} className='h-10 w-2/12 bg-blue-500 mx-1 px-1 rounded' >Apply</button>
                 <button onClick={resetFilter} className='h-10 w-2/12 bg-blue-500 mx-1 px-1 rounded' >Reset</button>
