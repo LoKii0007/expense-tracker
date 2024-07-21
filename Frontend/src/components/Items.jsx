@@ -36,13 +36,13 @@ export function Item({item}) {
 
     return (
         <>
-            <div className='flex justify-between m-1'>
+            <div className='flex justify-between m-1 '>
                 <div className='flex align-center'>
                     <h3 className='pl-2 pt-1 pr-2 w-[100px] text-center pb-1 rounded font-bold' style={{ backgroundColor: colorMap[capitalizedCategory] }}>{capitalizedCategory}</h3>
-                    <p className='mx-4 text-center font-bold flex items-center'>{item.note}</p>
+                    <p className='mx-4 text-center trans font-bold flex items-center'>{item.note}</p>
                 </div>
                 <div className='flex items-center'>
-                    <p className={`font-bold ${item.type === 'Income' ? 'text-green-500' : 'text-red-500'} mr-1 flex items-center`}>{item.amount}</p>
+                    <p className={`font-bold ${item.type === 'Income' ? 'text-green-500' : 'text-red-500'} mr-1 flex items-center`}>{item.amount} {item.currency} </p>
                     <EditIcon onClick={() => document.getElementById('my_modal_2').showModal()} className='text-red-500 cursor-pointer mx-2' />
                     <DeleteIcon className='text-red-500 cursor-pointer mx-2' />
                 </div>

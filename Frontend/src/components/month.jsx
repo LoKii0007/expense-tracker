@@ -20,30 +20,39 @@ function Month({ sample }) {
 
     useEffect(()=>{
        console.log('changed')
-    }, [filteredMonth])
+    }, [filteredMonth, applyFilter])
 
-    function filterByType() {
-        console.log(filtervalues.type)
-        const filtered = filteredMonth.map(month => 
-            month.filter(transaction => transaction.type.toLowerCase() === filtervalues.type.toLowerCase())
+    const filterByType = (transactions) => {
+        console.log(transactions)
+        return transactions.map(month => 
+            month.filter(transaction => 
+                transaction.type.toLowerCase().includes(filtervalues.type.toLowerCase())
+            )
         ).filter(month => month.length > 0);
-        setFilteredMonth(filtered);
-        console.log(filtered);
-    }
+    };
 
-    function filterByCategory() {
-        console.log(filtervalues.type)
-        const filtered = filteredMonth.map(month => 
-            month.filter(transaction => transaction.category.toLowerCase() === filtervalues.category.toLowerCase())
+    const filterByCategory = (transactions) => {
+        console.log(transactions)
+        return transactions.map(month => 
+            month.filter(transaction => 
+                transaction.category.toLowerCase().includes(filtervalues.category.toLowerCase())
+            )
         ).filter(month => month.length > 0);
-        setFilteredMonth(filtered);
-    }
+    };
 
-    function filterByCurrency() {
-        console.log(filtervalues.type)
-        const filtered = filteredMonth.map(month => 
-            month.filter(transaction => transaction.currency.toLowerCase() === filtervalues.currency.toLowerCase())
+    const filterByCurrency = (transactions) => {
+        console.log(transactions)
+        return transactions.map(month => 
+            month.filter(transaction => 
+                transaction.currency.toLowerCase().includes(filtervalues.currency.toLowerCase())
+            )
         ).filter(month => month.length > 0);
+    };
+    function applyFilter(){
+        let filtered = filterByType(sample);
+        filtered = filterByCategory(filtered);
+        console.log(filtered)
+        filtered = filterByCurrency(filtered);
         setFilteredMonth(filtered);
     }
     function resetFilter(){
@@ -53,11 +62,6 @@ function Month({ sample }) {
             currency: '',
             type: ''
         })
-    }
-    function applyFilter(){
-        if(filtervalues.type.length > 0) filterByType()
-        if(filtervalues.category.length > 0) filterByCategory()
-        if(filtervalues.currency.length > 0) filterByCurrency()
     }
 
     for (let i = 0; i < sample.length; i++) {
@@ -94,11 +98,11 @@ function Month({ sample }) {
 
     return (
         <>
-            <div className={`flex flex-col justify-center items-center w-full h-full ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} `}>
+            <div className={`flex justify-center items-center w-full h-full ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} `}>
 
                 {/* Chart Section */}
-                <div className={`flex flex-col sm:flex-row justify-between items-center w-11/12 sm:w-10/12 lg:w-8/12 ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-2 space-x-0 sm:space-x-4 space-y-4 sm:space-y-0`}>
-                    <div className={`flex flex-col items-center ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-4 w-full sm:w-1/2`}>
+                <div className={`flex charts justify-between items-center w-11/12 sm:w-10/12 lg:w-8/12 ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-2 space-x-0 sm:space-x-4 space-y-4 sm:space-y-0`}>
+                    <div className={`flex flex-col chrt items-center ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-4 w-full sm:w-1/2`}>
                         <Chart
                             chartdata={incomeData}
                             colorCombination={false}
@@ -108,7 +112,7 @@ function Month({ sample }) {
                             INCOME: ${income}
                         </div>
                     </div>
-                    <div className={`flex flex-col items-center ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-4 w-full sm:w-1/2`}>
+                    <div className={`flex flex-col chrt items-center ${lightTheme ? 'bg-neutral-200 text-black' : 'bg-gray-800 text-white'} p-4 w-full sm:w-1/2`}>
                         <Chart
                             chartdata={expenseData}
                             colorCombination={true}

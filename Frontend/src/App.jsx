@@ -1,6 +1,7 @@
 import { Home } from "./pages/Home";
 import { Navbar } from "./components/Navbar";
 import { useSelector} from 'react-redux';
+import './App.css'
 
 export default function App() {
   const lightTheme = useSelector((state) => state.themeKey);
